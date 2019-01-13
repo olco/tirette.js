@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="fr-fr">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="Description" content="Author: Olivier Cosquer, Description: Site personnel. Un composant graphique JS pour la saisie de nombres">
+    <title>tirette.js ou comment faire des formulaires web avec des "tirettes" - Pages perso d'Olivier Cosquer</title>
+    <link rel="icon" type="image/png" href="../img/ocosquer.png" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="tirette.css" />
+    <script language="javascript" src="tirette.js"></script>
+</head>
+
+<body>
+
+
+
+    <section>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="../index.html" aria-label="Retour à la page d'accueil"><img src="../img/accueil.png" alt=""></a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <header></header>
+        <article>
+            <h1>tirette.js ou comment changer la manière de saisir certains champs de formulaire</h1>
+            <p class="date">
+                Rédigé le 01 janvier 2019
+            </p>
+            <h3>Une démo pour commencer</h3>
+            <p>
+                <input type="number" class="tirette" placeholder="Choisir un nombre --->" aria-label="Input de la démo rapide">
+            </p>
+            <p>
+                ou
+            </p>
+            <p>
+                <select aria-label="Selection d'un mois" class="tirette" accuracy="20">
+                    <option value="">--Choisissez un mois--</option>
+                    <option value="janvier">janvier</option>
+                    <option value="février">février</option>
+                    <option value="mars">mars</option>
+                    <option value="avril">avril</option>
+                    <option value="mai">mai</option>
+                    <option value="juin">juin</option>
+                    <option value="juillet">juillet</option>
+                    <option value="août">août</option>
+                    <option value="septembre">septembre</option>
+                    <option value="octobre">octobre</option>
+                    <option value="novembre">novembre</option>
+                    <option value="décembre">décembre</option>
+                </select>
+            </p>
+            <p>
+                Cliquez et maintenez le bouton appuyé sur la tirette (à droite du champ de saisie). Déplacez la tirette jusqu'à la valeur souhaitée. Relachez le bouton pour finaliser la saisie.
+            </p>
+
+            <h3>Présentation rapide</h3>
+            <p>
+                Dans certains parcours utilisateurs, on souhaite parfois éviter au maximum les allers-retours - fatiguants - entre la souris et le clavier (ou tactile et clavier virtuel). Ce composant permet donc à l'utilisateur de garder une perception de la vue principale
+                sans avoir à passer sur un autre dispositif et donc sans perte totale de focus. Sur le plan moteur, la tirette (si elle est bien ajustée au niveau de la précision, voir ci-dessous) demandera moins d'efforts. Elle sera surtout efficace
+                pour la saisie de "petits" nombres car nous sommes limités par la résolution de l'écran. Ce composant n'a donc pas vocation a être utilisé systèmatiquement pour la saisie de nombres ou la sélection de valeurs, mais peut malgré tout être
+                utile dans bien des cas.
+            </p>
+            <h3>Télécharger</h3>
+            <p>
+                <a href="https://github.com/olco/tirette.js" target="_blank" alt="ouvre une nouvelle fenêtre vers github">https://github.com/olco/tirette.js</a>
+
+            </p>
+            <h3>Intégration</h3>
+            <p>
+                Après avoir intégré les fichiers 'tirette.css' et 'tirette.js' dans la page HTML, il suffit simplement d'ajouter class='tirette' en attribut des champs 'input' ou 'select' souhaités.
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette"&gt;</code>
+            </p>
+            <h3>Gestion de la précision via l'attribut 'accuracy'</h3>
+            <p>Un attribut "accurarcy" a été implémenté pour permettre de gérer la précision de la tirette. Plus cet attribut est élevé plus il sera facile pour l'utilisateur de sélectionner la valeur choisie. Par exemple, si l'attribut 'accuracy' est positionné
+                à 4, on utilisera 4 pixels pour une unité. S'il est à 10 on utilisera 10 pixels pour une unité, et ainsi de suite.</p>
+            <p>
+                <code>&lt;input type="number" class="tirette" accuracy="4"&gt;</code>
+            </p>
+            <p>Il faut être vigilent à ne pas mettre une précision trop élevée car de facto, cela limite les possibilités de valeurs maximum. Par exemple, pour une précision à 10 pixels sur une diagonale maximum de 800px, la valeur maximum ne pourra pas
+                dépasser 80 (Soit 800 divisé par 10). Selon les cas, cela peut convenir mais il faut bien avoir à l'esprit l'environnement dans lequel on souhaite executer le composant.</p>
+
+            <h3>Exemple : Nombre avec une précision à 4 pixels pour une unité</h3>
+            <p>
+                <input type="number" class="tirette" placeholder="Un nombre" accuracy="4" aria-label="Démo avec une précision">
+            </p>
+            <p>
+                Dans l'exemple ci-dessus, on a indiqué une précision à 4 pixels par unité. Cela veut dire qu'il faut 4 pixels pour incrémenter la valeur d'une unité. Cela permet de faciliter la précision de la saisie. En revanche, cela réduit les possibilités de valeur
+                sur l'écran car le composant dépend de la résolution disponible.
+            </p>
+            <h3>Les attributs 'min' et 'max'</h3>
+            <p>
+                Je conseille l'utilisation d'input de type 'number' car il gère nativement les attributs 'min' et 'max'. Il est néanmoins possible de spécifier ces attributs pour d'autres types d'input (ex : type="text" ou 'select', voir ci-dessous).
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette" min="10"&gt;</code>
+            </p>
+            <p>
+                L'attribut 'min', s'il est spécifié, permet de définir la valeur de départ de la saisie. La tirette prendra directement cette valeur et l'incrémentera progressivement lors de son étirement.
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette" max="50"&gt;</code>
+            </p>
+            <p>
+                L'attribut 'max', s'il est spécifié, permet de définir la valeur de fin de la saisie. La tirette ne dépassera jamais cette valeur.
+            </p>
+            <h3>Exemple : Date de naissance</h3>
+            <p>
+                <input type="number" min="1900" max="2019" placeholder="Année" accuracy="3" class="tirette" aria-label="Année de naissance">
+                <input type="number" min="0" max="12" placeholder="Mois" accuracy="16" class="tirette" aria-label="Mois de naissance">
+                <input type="number" min="1" max="31" placeholder="Jour" accuracy="8" class="tirette" aria-label="Jour de naissance">
+            </p>
+            <p>
+                Ci-dessus un exemple de saisie de date avec des valeurs min et des valeurs max. La tirette ne peut pas dépasser la valeur max. Le calcul débute à partir de la valeur min (exemple pour l'année : 1900).
+            </p>
+            <h3>Exemple : Nombre avec minimum négatif</h3>
+            <p>
+                <input type="number" min="-50" max="50" placeholder="Température" accuracy="4" class="tirette" aria-label="Min négatif">
+            </p>
+            <p>
+                Il est tout à fait possible de spécifier un 'min' et un 'max' négatif. La seul obligation est d'avoir un 'min' inférieur au 'max'.
+            </p>
+            <h3>Les champs de sélection</h3>
+            <p>
+                <select aria-label="Selection d'un mois" class="tirette" accuracy="20">
+                    <option value="">--Choisissez un mois--</option>
+                    <option value="janvier">janvier</option>
+                    <option value="février">février</option>
+                    <option value="mars">mars</option>
+                    <option value="avril">avril</option>
+                    <option value="mai">mai</option>
+                    <option value="juin">juin</option>
+                    <option value="juillet">juillet</option>
+                    <option value="août">août</option>
+                    <option value="septembre">septembre</option>
+                    <option value="octobre">octobre</option>
+                    <option value="novembre">novembre</option>
+                    <option value="décembre">décembre</option>
+                </select>
+            </p>
+            <p>
+                L'intégration est aussi simple que pour un champ de type 'input'.
+            </p>
+            <p>
+                <code>&lt;select class="tirette"&gt;...&lt;/select&gt;</code>
+            </p>
+            <p>
+                Le principe fonctionne également avec les champs de type 'select'. Dans certains cas, ces champs ont de très nombreuses valeurs qu'il n'est pas toujours simple de parcourir par enchainement de clics. La sélection dans une liste telle qu'elle est proposée
+                par défaut demandent à la fois de la concentration et de la précision. La tirette propose une alternative qui peut, dans certains cas, être plus confortable d'utilisation.
+            </p>
+            <h3>Supprimer une valeur renseignée</h3>
+            <p>
+                Pour cela, il suffit de double-cliquer sur la tirette.
+            </p>
+            <p>
+                Note : ce comportement n'est pas très intuitif (car il faut avoir lu la documentation pour connaître le comportement). Qui plus est, ça fonctionne plutôt mal sur tactile. Le mieux étant l'énemi du bien, on s'en contentera pour le moment.
+            </p>
+
+            <h3>Environnements de développement et de tests</h3>
+            <p>
+                Développé sur Windows 10 et testé sur :
+                <ul>
+                    <li>Windows 10 + Firefox </li>
+                    <li>Windows 10 + Brave </li>
+                    <li>Windows 10 + Vivaldi </li>
+                    <li>Windows 10 + Google Chrome </li>
+                    <li>Android 8.0.0 + Google Chrome </li>
+                    <li>iOS ?? + Safari </li>
+                </ul>
+            </p>
+            <h3>Compatibilité et licence</h3>
+            <p>
+                Le composant est développé en Javascript standard (avec utilisation de principes introduits en ES6). A ce titre, il doit pouvoir être utilisé dans tout types de projets web avec différents types de frameworks dés lors que le composant s'execute dans un
+                navigateur supportant les différentes fonctions JS utilisées.
+            </p>
+            <p>
+                <a href="http://www.wtfpl.net" alt="Lien externe vers le détail del a licence WTFPL">Licence WTFPL</a> (lien externe en anglais)
+            </p>
+            <h3>Mais pourquoi appeler ça une 'tirette' ?</h3>
+            <p>
+                Petit coucou aux <a href="https://www.lalsace.fr/bas-rhin/2016/03/11/ce-francais-que-parlent-les-alsaciens" alt="Article tirette" title="lien externe vers un article sur l'Alsacien">Alsaciens</a> ! ;)
+            </p>
+            <h3>Les derniers trucs à faire</h3>
+            <p>
+                <ul>
+                    <li>Amélioration de la gestion de la suppression</li>
+                    <li>Gestion des décimales et de l'attribut 'step'</li>
+                    <li>Affichage des valeurs 'min' et 'max' à proximité de la poignée lors de l'étirement</li>
+                    <li>FIX du bug d'affichage sur le clic droit lors de l'étirement</li>
+                    <li>FIX du bug d'affichage sur le redimensionnement de fenêtre et sur la rotation d'écran</li>
+                    <li>Traduire tout ça dans la langue de Shakespeare</li>
+                </ul>
+            </p>
+            <p>N'hésitez pas à me faire part de vos remarques et de vos suggestions :)</p>
+        </article>
+        <aside>
+            <img src="../img/ocosquer.jpg" class="thumbnail" alt="Olivier Cosquer">
+            <h3>Olivier Cosquer
+                <a href="https://twitter.com/oc0squ3r" alt="Contact twitter"><img src="../img/twitter.png" alt="logo twitter" class="twitter"></a>
+            </h3>
+        </aside>
+        <footer>
+            Fait avec mes petites mains en 2019
+        </footer>
+    </section>
+
+
+</body>
+
+</html>
