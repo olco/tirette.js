@@ -17,79 +17,85 @@ let currentLine;
 let inputHeight = 0;
 
 // On va chercher tous les objets ayant la classe tirette
-let tirettes = document.getElementsByClassName("tirette");
+let tirettes;
 
-for (let i = 0; i < tirettes.length; i++) {
-    (function(index) {
+document.addEventListener('DOMContentLoaded', ev => {
 
-        // On ajoute dynamiquement les objets graphiques
-        tirettes[index].insertAdjacentHTML('afterend', '<div class="tirette-line-' + index + '"id="tirette-line-' + index + '">&nbsp;</div><div class="tirette-handle-' + index + '"id="tirette-handle-' + index + '" dragable="true" ><div class="tirette-label-' + index + '"id="tirette-label-' + index + '">&nbsp;</div></div>');
+    tirettes = document.getElementsByClassName("tirette");
 
-        // On récupère les objets tirette et ligne pour les repositionner
-        let tirette = document.getElementById("tirette-handle-" + index);
-        let line = document.getElementById("tirette-line-" + index);
+    for (let i = 0; i < tirettes.length; i++) {
+        (function(index) {
 
-        // Calcul de la position de la tirette et de la ligne
-        let rect = tirettes[index].getBoundingClientRect();
-        let rightPos = rect.right;
-        let leftPos = rect.left + (rect.right - rect.left) / 2;
-        let topPos = rect.top + window.scrollY;
-        inputHeight = rect.bottom - rect.top;
+            // On ajoute dynamiquement les objets graphiques
+            tirettes[index].insertAdjacentHTML('afterend', '<div class="tirette-line-' + index + '"id="tirette-line-' + index + '">&nbsp;</div><div class="tirette-handle-' + index + '"id="tirette-handle-' + index + '" dragable="true" ><div class="tirette-label-' + index + '"id="tirette-label-' + index + '">&nbsp;</div></div>');
 
-        // On repositionne la tirette et la ligne
-        line.style.left = rect.right + 'px';
-        line.style.top = topPos + parseInt((rect.bottom - rect.top) / 2) + 'px';
-        tirette.style.width = inputHeight + 'px';
-        tirette.style.height = inputHeight + 'px';
-        tirette.style.left = rightPos + 'px';
-        tirette.style.top = topPos + 'px';
-        tirette.style.marginRight = ((rect.bottom - rect.top)) + 'px';
+            // On récupère les objets tirette et ligne pour les repositionner
+            let tirette = document.getElementById("tirette-handle-" + index);
+            let line = document.getElementById("tirette-line-" + index);
 
-        // Gestion des événements souris
-        tirette.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            stateInit(this.id, this.offsetLeft, this.offsetTop, e.clientX, e.clientY);
-            e.stopPropagation();
-        }, true);
+            // Calcul de la position de la tirette et de la ligne
+            let rect = tirettes[index].getBoundingClientRect();
+            let rightPos = rect.right;
+            let leftPos = rect.left + (rect.right - rect.left) / 2;
+            let topPos = rect.top + window.scrollY;
+            inputHeight = rect.bottom - rect.top;
 
-        document.addEventListener('mouseup', function() {
-            stateEnd();
-        }, true);
+            // On repositionne la tirette et la ligne
+            line.style.left = rect.right + 'px';
+            line.style.top = topPos + parseInt((rect.bottom - rect.top) / 2) + 'px';
+            tirette.style.width = inputHeight + 'px';
+            tirette.style.height = inputHeight + 'px';
+            tirette.style.left = rightPos + 'px';
+            tirette.style.top = topPos + 'px';
+            tirette.style.marginRight = ((rect.bottom - rect.top)) + 'px';
 
-        document.addEventListener('mousemove', function(e) {
-            e.preventDefault();
-            stateMove(e.clientX, e.clientY);
-            e.stopPropagation();
-        }, true);
+            // Gestion des événements souris
+            tirette.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                stateInit(this.id, this.offsetLeft, this.offsetTop, e.clientX, e.clientY);
+                e.stopPropagation();
+            }, true);
 
-        // gestion de la suppression
-        tirette.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            let inputsTirette = document.getElementsByClassName('tirette');
-            let tiretteInput = inputsTirette[this.id.split('-')[2]];
-            tiretteInput.value = "";
-            e.stopPropagation();
-        }, true);
+            document.addEventListener('mouseup', function() {
+                stateEnd();
+            }, true);
 
-        // Gestion des événements tactiles
-        tirette.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            stateInit(this.id, this.offsetLeft, this.offsetTop, e.touches[0].clientX, e.touches[0].clientY);
-            e.stopPropagation();
-        }, true);
+            document.addEventListener('mousemove', function(e) {
+                e.preventDefault();
+                stateMove(e.clientX, e.clientY);
+                e.stopPropagation();
+            }, true);
 
-        document.addEventListener('touchend', function() {
-            stateEnd();
-        }, true);
+            // gestion de la suppression
+            tirette.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                let inputsTirette = document.getElementsByClassName('tirette');
+                let tiretteInput = inputsTirette[this.id.split('-')[2]];
+                tiretteInput.value = "";
+                e.stopPropagation();
+            }, true);
 
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-            stateMove(e.touches[0].clientX, e.touches[0].clientY);
-            e.stopPropagation();
-        }, true);
+            // Gestion des événements tactiles
+            tirette.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                stateInit(this.id, this.offsetLeft, this.offsetTop, e.touches[0].clientX, e.touches[0].clientY);
+                e.stopPropagation();
+            }, true);
 
-    })(i);
-}
+            document.addEventListener('touchend', function() {
+                stateEnd();
+            }, true);
+
+            document.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                stateMove(e.touches[0].clientX, e.touches[0].clientY);
+                e.stopPropagation();
+            }, true);
+
+        })(i);
+    }
+
+}, false);
 
 // Etat initial
 function stateInit(tirettId, offsetLeft, offsetTop, clientX, clientY) {
