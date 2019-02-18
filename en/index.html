@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="Description" content="tirette.js or how to change the way you enter certain forms fields">
+    <title>tirette.js or how to change the way you enter certain forms fields</title>
+    <link rel="icon" type="image/png" href="../../img/ocosquer.png" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../tirette.css" />
+    <script language="javascript" src="../tirette.js"></script>
+</head>
+
+<body>
+
+    <section>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="../../index.html" aria-label="Homepage"><img src="../../img/accueil.png" alt=""></a>
+                </li>
+            </ul>
+        </nav>
+
+        <header></header>
+        <article>
+            <h1>tirette.js or how to change the way you enter certain forms fields</h1>
+            <p class="date">
+                Written on January 01st, 2019 (<a href="../index.html">version française</a>)
+            </p>
+            <h3>A demo to start with</h3>
+            <p>
+                <input type="number" class="tirette" placeholder="Choose a number --->" aria-label="Demo input">
+            </p>
+            <p>
+                or
+            </p>
+            <p>
+                <select aria-label="Month selection" class="tirette" accuracy="20">
+                    <option value="">--Select a month--</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </p>
+            <p>
+                Click and hold the button pressed on the tirette (on the right of the input field). Move the handler to the desired value. Release the button to finalize the entry.
+            </p>
+
+            <h3>Quick presentation</h3>
+            <p>
+                In some user flow, we sometimes want to avoid as much as possible the tiring back and forth between the mouse and the keyboard (or tactile and virtual keyboard). This component therefore allows the user to keep a perception of the main view without having to switch to another device and therefore without total loss of focus. On the engine side, the pull tab (if properly adjusted in terms of accuracy, see below) will require less effort. It will be especially effective for entering "small" numbers because we are limited by the screen resolution. This component is therefore not intended to be used systematically for number entry or value selection, but can still be useful in many cases.
+            </p>
+            <h3>Download</h3>
+            <p>
+                <a href="https://github.com/olco/tirette.js" target="_blank" alt="Open a new window to github">https://github.com/olco/tirette.js</a>
+
+            </p>
+            <h3>Integration</h3>
+            <p>
+                After integrating the files "tirette.css" and "tirette.js" in the HTML page, you just have to add class='tirette' to the attribute of the desired input or select fields.
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette"&gt;</code>
+            </p>
+            <h3>Precision management via the attribute "accuracy".</h3>
+            <p>An "accurarcy" attribute has been implemented to manage the accuracy of the pull tab. The higher this attribute is, the easier it will be for the user to select the chosen value. For example, if the attribute'accuracy' is set to 4, 4 pixels will be used for one unit. If it is at 10, 10 pixels will be used for one unit, and so on.</p>
+            <p>
+                <code>&lt;input type="number" class="tirette" accuracy="4"&gt;</code>
+            </p>
+            <p>Care must be taken not to set the accuracy too high because it limits the possibilities of maximum values. For example, for an accuracy to 10 pixels on a maximum diagonal of 800px, the maximum value will not exceed 80 (i.e. 800 divided by 10). Depending on the case, this may be appropriate, but it is important to keep in mind the environment in which you want to execute the component.</p>
+
+            <h3>Example: Number with an accuracy of 4 pixels for a unit</h3>
+            <p>
+                <input type="number" class="tirette" placeholder="A number" accuracy="4" aria-label="Presicion demo">
+            </p>
+            <p>
+                In the example above, an accuracy of 4 pixels per unit was indicated. This means that it takes 4 pixels to increment the value by one unit. This makes it easier to enter data accurately. On the other hand, it reduces the value possibilities on the screen because the component depends on the available resolution.
+            </p>
+            <h3>'min' and 'max' attributes</h3>
+            <p>
+                I recommend the use of input of type "number" because it manages natively the attributes "min" and "max". However, it is possible to specify these attributes for other types of input (e. g. type="text" or "select', see below).
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette" min="10"&gt;</code>
+            </p>
+            <p>
+                The attribute'min', if specified, is used to define the starting value of the entry. The tirette will take this value directly and gradually increase it as it is stretched.
+            </p>
+            <p>
+                <code>&lt;input type="number" class="tirette" max="50"&gt;</code>
+            </p>
+            <p>
+                The attribute 'max', if specified, is used to define the end value of the entry. The tirette will never exceed this value.
+            </p>
+            <h3>Example : Birthdate</h3>
+            <p>
+                <input type="number" min="1900" max="2019" placeholder="Year" accuracy="3" class="tirette" aria-label="Year of birth">
+                <input type="number" min="0" max="12" placeholder="Month" accuracy="16" class="tirette" aria-label="Month of birth">
+                <input type="number" min="1" max="31" placeholder="Day" accuracy="8" class="tirette" aria-label="Day of birth">
+            </p>
+            <p>
+                Above is an example of date entry with min and max values. The pull tab cannot exceed the maximum value. The calculation starts from the minimum value (example for the year: 1900).
+            </p>
+            <h3>Example : Number with negative minimum</h3>
+            <p>
+                <input type="number" min="-50" max="50" placeholder="Temperature" accuracy="4" class="tirette" aria-label="negative minimum">
+            </p>
+            <p>
+                It is quite possible to specify a'min' and a'max' negative. The only obligation is to have a "min" lower than the "max".
+            </p>
+            <h3>The selection fields</h3>
+            <p>
+                <select aria-label="Month selection" class="tirette" accuracy="20">
+                    <option value="">--Select a month--</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </p>
+            <p>
+                Integration is as simple as for an input field.
+            </p>
+            <p>
+                <code>&lt;select class="tirette"&gt;...&lt;/select&gt;</code>
+            </p>
+            <p>
+                It also works with 'select' fields. In some cases, these fields have a lot of values not always easy to navigate by a series of clicks. Selecting from a list as proposed by default requires both concentration and accuracy. The pull tab offers an alternative that may, in some cases, be more comfortable to use.
+            </p>
+            <h3>Delete an entered value</h3>
+            <p>
+                To do this, simply double-click on the tirette.
+            </p>
+            <p>
+                Note: this behavior is not very intuitive (because you must have read the documentation to know the behavior). 
+            </p>
+
+            <h3>Development and testing environments</h3>
+            <p>
+                Developed on Windows 10 and tested on:
+                <ul>
+                    <li>Windows 10 + Firefox </li>
+                    <li>Windows 10 + Brave </li>
+                    <li>Windows 10 + Vivaldi </li>
+                    <li>Windows 10 + Google Chrome </li>
+                    <li>Android 8.0.0 + Google Chrome </li>
+                    <li>iOS ?? + Safari </li>
+                </ul>
+            </p>
+            <h3>Compatibility and licensing</h3>
+            <p>
+                The component is developed in standard Javascript (using principles introduced in ES6). As such, it must be able to be used in any type of web projects with different types of frameworks as soon as the component is executed in a browser supporting the different JS functions used.
+            </p>
+            <p>
+                <a href="http://www.wtfpl.net" alt=" WTFPL licence">WTFPL Licence</a>
+            </p>
+            <h3>But why call it a "tirette" ?</h3>
+            <p>
+                Hello to the <a href="https://www.lalsace.fr/bas-rhin/2016/03/11/ce-francais-que-parlent-les-alsaciens" alt="tirette article in french" title="tirette article in french">Alsatians</a> ! ;)
+            </p>
+            <h3>To do list</h3>
+            <p>
+                <ul>
+                    <li>Improved deletion management</li>
+                    <li>Management of decimals and "step" attribute .</li>
+                    <li>Display of 'min' and'max' values near the handle when stretching</li>
+                    <li>FIX the display bug on the right click when stretching</li>
+                    <li>FIX the display bug on window resizing and screen rotation</li>
+                </ul>
+            </p>
+            <p>Feel free to send me your comments and suggestions :)</p>
+        </article>
+        <aside>
+            <img src="../../img/ocosquer.jpg" class="thumbnail" alt="Olivier Cosquer">
+            <h3>Olivier Cosquer
+                <a href="https://twitter.com/oc0squ3r" alt="Contact twitter"><img src="../../img/twitter.png" alt="logo twitter" class="twitter"></a>
+            </h3>
+        </aside>
+        <footer>
+            Made with my hands in 2019
+        </footer>
+    </section>
+
+
+</body>
+
+</html>
