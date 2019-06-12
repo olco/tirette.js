@@ -20,15 +20,24 @@ let inputHeight = 0;
 let tirettes;
 
 document.addEventListener('DOMContentLoaded', ev => {
+    stateLoad(true);
+}, false);
 
+
+window.addEventListener('resize', function(e) {
+    stateLoad(false);
+}, false);
+
+function stateLoad(initState){
     tirettes = document.getElementsByClassName("tirette");
 
     for (let i = 0; i < tirettes.length; i++) {
         (function(index) {
 
+            if(initState == true){
             // On ajoute dynamiquement les objets graphiques
-            tirettes[index].insertAdjacentHTML('afterend', '<div class="tirette-line-' + index + '"id="tirette-line-' + index + '">&nbsp;</div><div class="tirette-handle-' + index + '"id="tirette-handle-' + index + '" dragable="true" ><div class="tirette-label-' + index + '"id="tirette-label-' + index + '">&nbsp;</div></div>');
-
+                tirettes[index].insertAdjacentHTML('afterend', '<div class="tirette-line-' + index + '"id="tirette-line-' + index + '">&nbsp;</div><div class="tirette-handle-' + index + '"id="tirette-handle-' + index + '" dragable="true" ><div class="tirette-label-' + index + '"id="tirette-label-' + index + '">&nbsp;</div></div>');
+            }        
             // On récupère les objets tirette et ligne pour les repositionner
             let tirette = document.getElementById("tirette-handle-" + index);
             let line = document.getElementById("tirette-line-" + index);
@@ -94,8 +103,7 @@ document.addEventListener('DOMContentLoaded', ev => {
 
         })(i);
     }
-
-}, false);
+}
 
 // Etat initial
 function stateInit(tirettId, offsetLeft, offsetTop, clientX, clientY) {
